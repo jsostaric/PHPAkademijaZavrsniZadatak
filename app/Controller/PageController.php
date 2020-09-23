@@ -4,10 +4,10 @@
 namespace App\Controller;
 
 
-class PageController
+class PageController extends Controller
 {
     public function indexAction()
     {
-        echo 'test';
+        return $this->view->render('index');
     }
 }
