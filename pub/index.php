@@ -11,7 +11,5 @@ spl_autoload_register(function ($class){
     }
 });
 
-session_start();
-
 App\Core\Router::load('../app/routes.php')
     ->direct(App\Core\Request::uri(), App\Core\Request::method());

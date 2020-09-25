@@ -1,0 +1,29 @@
+<?php include_once 'layout/header.phtml' ?>
+
+<div class="container">
+    <div class="container">
+        <form method="post" action="login">
+            <fieldset class="border p-2">
+                <legend class="w-auto">Login</legend>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="rememberMe" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember Me</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-2">Login</button>
+            </fieldset>
+        </form>
+        <p class="mt-5 text-center">Not registered? <a href="register">Make account here</a></p>
+
+    </div>
+</div>
+
+<?php include_once 'layout/footer.phtml' ?>
