@@ -10,7 +10,7 @@ create table users(
     username varchar(255) not null,
     email varchar(255) not null,
     password char(60) not null,
-    admin int default 0
+    admin bool default 0
 );
 
 create table products(

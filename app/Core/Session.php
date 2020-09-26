@@ -4,11 +4,13 @@
 namespace App\Core;
 
 
+
 class Session extends DataObject
 {
     protected static $instance;
+    private $currentUser;
 
-    public function __construct($data = [])
+    private function __construct($data = [])
     {
         parent::__construct($data);
         session_start();
@@ -31,7 +33,7 @@ class Session extends DataObject
 
     public function isLoggedIn()
     {
-        return isset($_SESSION['is_logged_in']);
+        return isset($_SESSION['user']);
     }
 
     public function logout()

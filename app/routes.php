@@ -8,6 +8,7 @@ $router->get('login', 'AuthController@loginAction');
 $router->post('login', 'AuthController@loginSubmitAction');
 $router->get('register', 'AuthController@registerAction');
 $router->post('register', 'AuthController@registerSubmitAction');
+$router->get('logout', 'AuthController@logoutAction');
 
 // user pages
 $router->get('user/show', 'UserController@showAction');
