@@ -22,6 +22,7 @@ class HomeController extends Controller
         $data = [
             'products' => $products
         ];
+
         return $this->view->render('index', $data);
     }
 }

@@ -10,7 +10,6 @@ use App\Model\User\UserResource;
 
 class AuthController extends Controller
 {
-    protected $session;
     private $userRepository;
 
     public function __construct()
@@ -21,43 +20,34 @@ class AuthController extends Controller
 
     public function loginAction()
     {
-        if($this->session->isLoggedIn()){
-            header('Location: /');
+        if(!$this->session->isLoggedIn()){
+            return $this->view->render('login');
         }
-        return $this->view->render('login');
+        header('Location: /');
     }
 
     public function loginSubmitAction()
     {
-        //check if user is logged in
-        if($this->session->isLoggedIn()){
-            header('Location: /');
-        }
-
-        $data = $this->validateLoginData($_POST);
+        $user = $this->validateLoginData($_POST);
 
         //log in user
-        $this->session->user = $data;
+        $this->session->login($user);
 
         header('Location: /');
     }
 
     public function registerAction()
     {
-        if($this->session->isLoggedIn()){
-            header('Location: /');
-            return;
+        if(!$this->session->isLoggedIn()){
+            return $this->view->render('register');
         }
-        return $this->view->render('register');
+
+        header('Location: /');
     }
 
     public function registerSubmitAction()
     {
         $data = $_POST;
-        //check if user is logged in
-        if($this->session->isLoggedIn()){
-            header('location: /');
-        }
 
         //check if all boxes are filled
         if(empty($data['username']) || empty($data['email']) || empty($data['password']) || empty($data['repeatPassword'])){
@@ -78,12 +68,17 @@ class AuthController extends Controller
             return;
         }
 
-
         //insert user and redirect
         $resource = new UserResource();
         $resource->insertUser($data);
 
         header('Location: login');
+    }
+
+    public function logoutAction()
+    {
+        $this->session->logout();
+        header('Location: /');
     }
 
     public function validateLoginData($data)
@@ -109,11 +104,5 @@ class AuthController extends Controller
         }
 
         return $user;
-    }
-
-   public function logoutAction()
-    {
-        $this->session->logout();
-        header('Location: /');
     }
 }

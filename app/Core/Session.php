@@ -8,18 +8,11 @@ namespace App\Core;
 class Session extends DataObject
 {
     protected static $instance;
-    private $currentUser;
 
     private function __construct($data = [])
     {
         parent::__construct($data);
         session_start();
-    }
-
-    public function __set($key, $value)
-    {
-        parent::__set($key, $value);
-        $_SESSION[$key] = $value;
     }
 
     public static function getInstance()
@@ -36,9 +29,19 @@ class Session extends DataObject
         return isset($_SESSION['user']);
     }
 
+    public function login($user)
+    {
+        return $_SESSION['user'] = $user;
+    }
+
     public function logout()
     {
         unset($_SESSION['user']);
         session_destroy();
+    }
+
+    public function getUser()
+    {
+        return $_SESSION['user'];
     }
 }
