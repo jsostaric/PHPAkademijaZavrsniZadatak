@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Model\Product\ProductRepository;
 use App\Model\Category\CategoryRepository;
+use App\Model\Product\ProductResource;
 
 class ProductController extends Controller
 {
@@ -28,7 +29,6 @@ class ProductController extends Controller
         $data = [
             'products' => $products
         ];
-
         return $this->view->render('product/index', $data);
     }
 
@@ -42,21 +42,19 @@ class ProductController extends Controller
 
     public function storeAction()
     {
+        $resource = new ProductResource();
+        $image = null;
+        //validate and sanitize picture
+        if($_FILES['image']['error'] === 0){
+            $image = $resource->validateImage($_FILES);
+        }
 
-    }
+        //validate new product data
+        $postData = $resource->validate($_POST);
 
-    public function editAction()
-    {
-        $id = $_GET['id'];
-    }
+        //insert data
+        $resource->insert($image, $postData);
 
-    public function updateAction()
-    {
-
-    }
-
-    public function destroyAction()
-    {
-
+        header('Location: /product');
     }
 }

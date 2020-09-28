@@ -2,6 +2,7 @@
 
 <div class="row">
     <div class="container">
+
         <form action="search" method="post">
             <input type="search" name="search" value=""> <button type="submit" >Search</button>
         </form>
@@ -24,7 +25,7 @@
             <?php foreach ($products as $product):  ?>
                 <tr <?= $product->amount < 1 ? 'id=outOfStock' : '' ?>>
                     <td>
-                        <img src="<?= $product->image  ?>" alt="cover" />
+                        <img src="<?= $product->getImage() ?>" class="image" alt="cover" />
                     <td>
                         <h6><a href="product/show?id=<?=$product->id ?>"><?= $product->title ?></a></h6>
                         <small><?= $product->subtitle ?></small>
