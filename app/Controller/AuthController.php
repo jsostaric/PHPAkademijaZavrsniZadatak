@@ -33,6 +33,11 @@ class AuthController extends Controller
         //log in user
         $this->session->login($user);
 
+        if($this->session->getUser()->getAdmin()){
+            header('Location: product');
+            return;
+        }
+
         header('Location: /');
     }
 

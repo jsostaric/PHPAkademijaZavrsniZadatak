@@ -1,0 +1,149 @@
+<?php include_once BP . '/view/layout/header.phtml' ?>
+
+<div class="row">
+    <div class="container">
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Add Book
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <form action="/product/store" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <!-- left side  -->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                        <label for="image" class="col-sm-3 col-form-label">Add Image:</label>
+                                    <div class="col-sm-6">
+                                        <input type="file" name="image" id="image" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="title" class="col-sm-3 col-form-label">Title:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="title" id="title" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="subtitle" class="col-sm-3 col-form-label">Subtitle:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="subtitle" id="subtitle" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="author" class="col-sm-3 col-form-label">Author:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="author" id="author" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="publisher" class="col-sm-3 col-form-label">Publisher:</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="publisher" id="publisher" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="year" class="col-sm-3 col-form-label">Year:</label>
+                                    <div class="col-sm-6">
+                                        <input type="number" name="year" id="year" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="format" class="col-sm-3 col-form-label">Format:</label>
+                                    <div class="col-sm-6">
+                                        <select class="custom-select" id="format" name="format">
+                                            <option value="Paperback">Paperback</option>
+                                            <option value="Hardback">Hardback</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="retail" class="col-sm-3 col-form-label">Retail Price:</label>
+                                    <div class="col-sm-6">
+                                        <input type="number" name="retail_price" id="retail" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                                <!-- right side -->
+                            <div class="col-md-6 ml-auto">
+                                <div class="form-group row">
+                                    <label for="barcode" class="col-sm-3 col-form-label">Barcode:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" name="barcode" id="barcode" class="form-control form-control-sm">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="categories" class="col-sm-4 col-form-label">Categories:</label>
+                                    <div class="col-sm-7">
+                                        <?php foreach ($categories as $category): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="categories[]" value="<?= $category->getId() ?>" id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    <?= $category->getName() ?>
+                                                </label>
+                                            </div>
+                                        <?php endforeach;  ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description:</label>
+                                    <textarea class="form-control form-control-sm" name="description" id="description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                            <hr>
+
+                        <div class="row">
+                            <!-- left side  -->
+                            <div class="col-md-8">
+                                <div class="form-group row">
+                                    <label for="condition" class="col-sm-3 col-form-label">Condition:</label>
+                                    <div class="col-sm-6">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="conditions" id="inlineRadio1" value="1">
+                                            <label class="form-check-label" for="inlineRadio1">Like New</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="conditions" id="inlineRadio2" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Good</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="conditions" id="inlineRadio3" value="3">
+                                            <label class="form-check-label" for="inlineRadio3">Bad</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="sellPrice">Sell Price</label>
+                                        <input type="number" class="form-control" id="sellPrice" name="sellPrice">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="buyPrice">Buy Price</label>
+                                        <input type="number" class="form-control" id="buyPrice" name="buyPrice">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="amount">Amount</label>
+                                        <input type="number" class="form-control" id="amount" name="amount">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            <button class="btn btn-block btn-primary">Add Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include_once BP . '/view/layout/footer.phtml' ?>

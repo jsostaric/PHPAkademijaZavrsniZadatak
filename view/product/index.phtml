@@ -2,14 +2,18 @@
 
 <div class="row">
     <div class="container">
-        <h1 class="text-center mb-5">Antikvarijat</h1>
-        <input type="search"> <button type="submit" >Search</button>
+        <form action="search" method="post">
+            <input type="search" name="search" value=""> <button type="submit" >Search</button>
+        </form>
         <table class="table table-striped">
             <thead>
+            <th>Image</th>
             <th>Title</th>
             <th>Author</th>
             <th>Publisher</th>
-            <th>Cover</th>
+            <th>Category</th>
+            <th>Format</th>
+            <th>Condition</th>
             <th>Amount</th>
             <th>Sell Price</th>
             <th>Buy Price</th>
@@ -17,16 +21,30 @@
             </thead>
 
             <tbody>
-                <tr>
-                    <td>Hichhiker's guide to the galaxy - first book</td>
-                    <td>William Gibson</td>
-                    <td>PB</td>
-                    <td>s</td>
-                    <td align="center">3</td>
-                    <td>79kn</td>
-                    <td>35kn</td>
-                    <td>edit  delete</td>
+            <?php foreach ($products as $product):  ?>
+                <tr <?= $product->amount < 1 ? 'id=outOfStock' : '' ?>>
+                    <td>
+                        <img src="<?= $product->image  ?>" alt="cover" />
+                    <td>
+                        <h6><a href="product/show?id=<?=$product->id ?>"><?= $product->title ?></a></h6>
+                        <small><?= $product->subtitle ?></small>
+                    </td>
+                    <td><?= $product->author ?></td>
+                    <td>
+                        <?= $product->publisher ?>
+                        <?= $product->year ? '('.$product->year.')' : ''?>
+                    </td>
+                    <td>
+                        <?= $product->category ?>
+                    </td>
+                    <td><?= $product->format ?></td>
+                    <td><?= $product->conditions ?></td>
+                    <td align="center"><?= $product->amount ?></td>
+                    <td><?= $product->sellPrice ?>kn</td>
+                    <td><?= $product->buyPrice ?>kn</td>
+                    <td><a href="#">delete</a></td>
                 </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div>

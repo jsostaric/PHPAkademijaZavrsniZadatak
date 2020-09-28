@@ -4,18 +4,59 @@
 namespace App\Controller;
 
 
-use App\Model\Product\Product;
+use App\Model\Product\ProductRepository;
+use App\Model\Category\CategoryRepository;
 
 class ProductController extends Controller
 {
-    public function indexAction()
+    protected $productRepository;
+
+    public function __construct()
     {
-        //check if logged in and admin
-        return $this->view->render('admin/index');
+        parent::__construct();
+        $this->productRepository = new ProductRepository();
     }
 
-    public function showAction()
+    public function indexAction()
+    {
+        if(!$this->session->getUser()->getAdmin()){
+            header('Location: /');
+        }
+
+        $products = $this->productRepository->getList();
+
+        $data = [
+            'products' => $products
+        ];
+
+        return $this->view->render('product/index', $data);
+    }
+
+    public function createAction()
+    {
+        $categoryRepo = new CategoryRepository();
+        $categories = $categoryRepo->getList('Book');
+
+        return $this->view->render('product/create', compact('categories'));
+    }
+
+    public function storeAction()
+    {
+
+    }
+
+    public function editAction()
     {
         $id = $_GET['id'];
+    }
+
+    public function updateAction()
+    {
+
+    }
+
+    public function destroyAction()
+    {
+
     }
 }
