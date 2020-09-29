@@ -2,10 +2,14 @@
 
 <div class="row">
     <div class="container">
+        <div class="col-sm-6 mb-3 offset-2">
+            <form action="search" method="post" class="form-inline my-2 my-lg-0">
+                <label for="search">Search:</label>
+                <input type="search" name="search" id="search" class="form-control mr-sm-2 ml-2">
+                <button type="submit" class="btn btn-primary form-control">Search</button>
+            </form>
+        </div>
 
-        <form action="search" method="post">
-            <input type="search" name="search" value=""> <button type="submit" >Search</button>
-        </form>
         <table class="table table-striped">
             <thead>
             <th>Image</th>
@@ -25,7 +29,7 @@
             <?php foreach ($products as $product):  ?>
                 <tr <?= $product->amount < 1 ? 'id=outOfStock' : '' ?>>
                     <td>
-                        <img src="<?= $product->getImage() ?>" class="image" alt="cover" />
+                        <img src="<?= $product->image ?>" class="image" alt="cover" />
                     <td>
                         <h6><a href="product/show?id=<?=$product->id ?>"><?= $product->title ?></a></h6>
                         <small><?= $product->subtitle ?></small>

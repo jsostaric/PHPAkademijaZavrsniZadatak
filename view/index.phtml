@@ -3,53 +3,43 @@
 <div class="row">
     <div class="container">
         <h1 class="text-center mb-5">Antikvarijat</h1>
-        <form action="search" method="post">
-            <input type="search" name="search"> <button type="submit" >Search</button>
-        </form>
-        <table class="table table-striped">
-            <thead>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Publisher</th>
-            <th>Category</th>
-            <th>Format</th>
-            <th>Condition</th>
-            <th>Price</th>
-            <th>Action</th>
-            </thead>
-
-            <tbody>
-            <?php
-            foreach ($products as $product):
-                if($product->amount > 0):
-            ?>
-                <tr>
-                    <td>
-                        <img src="<?= $product->image  ?>" alt="cover" />
-                    <td>
-                        <h6><a href="/~polaznik22/product/show?id=<?=$product->id ?>"><?= $product->title ?></a></h6>
-                        <small><?= $product->subtitle ?></small>
-                    </td>
-                    <td><?= $product->author ?></td>
-                    <td>
-                        <?= $product->publisher ?>
-                        <?= $product->year ? '('.$product->year.')' : ''?>
-                    </td>
-                    <td>
-                        <?= $product->category ?>
-                    </td>
-                    <td><?= $product->format ?></td>
-                    <td><?= $product->conditions ?></td>
-                    <td><?= $product->sellPrice ?>kn</td>
-                    <td><a href="#">Buy</a></td>
-                </tr>
-            <?php
-                endif;
-            endforeach;
-            ?>
-            </tbody>
-        </table>
+        <div class="col-sm-6 mb-3 offset-2">
+            <form action="search" method="post" class="form-inline my-2 my-lg-0">
+                <label for="search">Search:</label>
+                <input type="search" name="search" id="search" class="form-control mr-sm-2 ml-2">
+                <button type="submit" class="btn btn-primary form-control">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                <?php
+                foreach ($products as $product):
+                    if($product->amount > 0):
+                        ?>
+                        <div class="card mr-2  mb-2" style="width: 18rem;">
+                            <div class="card-body">
+                                <img src="" alt="cover">
+                                <h5 class="card-title"><?= $product->getTitle()  ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><?= $product->getSubtitle()  ?></h6>
+                                <p><?= $product->getAuthor()  ?></p>
+                                <br>
+                                <p><span class="badge badge-warning"><?= $product->getConditions()  ?></span> Condition</p>
+                                <p><small><?= $product->getFormat()  ?></small></p>
+                                <p><?= $product->getSellPrice()  ?></p>
+                                <p align="right"><a href="/~polaznik22/cart">Cart</a></p>
+                            </div>
+                        </div>
+                    <?php
+                    endif;
+                endforeach;
+                ?>
+            </div>
+        </div>
     </div>
 </div>
 

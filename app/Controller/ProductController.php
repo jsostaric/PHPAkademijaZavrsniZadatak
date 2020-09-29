@@ -21,7 +21,7 @@ class ProductController extends Controller
     public function indexAction()
     {
         if(!$this->session->getUser()->getAdmin()){
-            header('Location: /');
+            header('Location: /~polaznik22/');
         }
 
         $products = $this->productRepository->getList();
@@ -34,6 +34,12 @@ class ProductController extends Controller
 
     public function createAction()
     {
+        if (!$this->session->getUser()->getAdmin())
+        {
+            header('Location: /~polaznik22/');
+            return;
+        }
+
         $categoryRepo = new CategoryRepository();
         $categories = $categoryRepo->getList('Book');
 
