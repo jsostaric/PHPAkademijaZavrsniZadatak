@@ -23,7 +23,7 @@ class AuthController extends Controller
         if(!$this->session->isLoggedIn()){
             return $this->view->render('login');
         }
-        header('Location: /');
+        header('Location: /~polaznik22/');
     }
 
     public function loginSubmitAction()
@@ -34,11 +34,11 @@ class AuthController extends Controller
         $this->session->login($user);
 
         if($this->session->getUser()->getAdmin()){
-            header('Location: product');
+            header('Location: /~polaznik22/product');
             return;
         }
 
-        header('Location: /');
+        header('Location: /~polaznik22/');
     }
 
     public function registerAction()
@@ -47,7 +47,7 @@ class AuthController extends Controller
             return $this->view->render('register');
         }
 
-        header('Location: /');
+        header('Location: /~polaznik22/');
     }
 
     public function registerSubmitAction()
@@ -56,20 +56,20 @@ class AuthController extends Controller
 
         //check if all boxes are filled
         if(empty($data['username']) || empty($data['email']) || empty($data['password']) || empty($data['repeatPassword'])){
-            header('Location: register');
+            header('Location: /~polaznik22/register');
             return;
         }
 
         //check if user exist
         $user = $this->userRepository->getUserByEmail($data['email']);
         if(!empty($user)){
-            header('Location: register');
+            header('Location: /~polaznik22/register');
             return;
         }
 
         //check if password and repeat password is same
         if($data['password'] !== $data['repeatPassword']){
-            header('Location: register');
+            header('Location: /~polaznik22/register');
             return;
         }
 
@@ -77,13 +77,13 @@ class AuthController extends Controller
         $resource = new UserResource();
         $resource->insertUser($data);
 
-        header('Location: login');
+        header('Location: /~polaznik22/login');
     }
 
     public function logoutAction()
     {
         $this->session->logout();
-        header('Location: /');
+        header('Location: /~polaznik22/');
     }
 
     public function validateLoginData($data)
@@ -93,19 +93,19 @@ class AuthController extends Controller
 
         //check if $_POST is empty
         if(empty($email) || empty($password)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         //check credentials
         $user = $this->userRepository->getUserByEmail($email);
         if(empty($user)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         $databasePassword = $user->getPassword();
 
         if(!password_verify($password, $databasePassword)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         return $user;

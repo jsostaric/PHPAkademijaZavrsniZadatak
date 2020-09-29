@@ -55,6 +55,6 @@ class ProductController extends Controller
         //insert data
         $resource->insert($image, $postData);
 
-        header('Location: /product');
+        header('Location: /~polaznik22/product');
     }
 }
