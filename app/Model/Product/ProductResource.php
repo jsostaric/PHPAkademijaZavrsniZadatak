@@ -15,6 +15,7 @@ class ProductResource
         try {
             if($image != null){
                 $filename = $this->sanitizeImage($image);
+                move_uploaded_file($image['image']['tmp_name'], $filename);
             }
 
             $db = Database::getInstance();
@@ -58,7 +59,6 @@ class ProductResource
                 'amount' => $data['amount']
             ]);
 
-            move_uploaded_file($image['image']['tmp_name'], $filename);
 
             $db->commit();
 
