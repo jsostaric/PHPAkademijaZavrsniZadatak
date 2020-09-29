@@ -1,5 +1,3 @@
-drop database if exists polaznik22;
-create database polaznik22 character set utf8mb4 collate utf8mb4_unicode_ci;
 use polaznik22;
 
 create table users(
@@ -50,20 +48,13 @@ create table product_categories(
     categories int not null
 );
 
-create table aqusitions(
+create table acqusitions(
     id int not null primary key auto_increment,
     title varchar(255) not null,
     barcode int
 );
 
 create table orders(
-    id int not null primary key auto_increment,
-    product int not null,
-    conditions int not null,
-    buy_price int not null
-);
-
-create table offers(
     id int not null primary key auto_increment,
     product int not null,
     conditions int not null,
