@@ -77,13 +77,13 @@ class AuthController extends Controller
         $resource = new UserResource();
         $resource->insertUser($data);
 
-        header('Location: login');
+        header('Location: /~polaznik22/login');
     }
 
     public function logoutAction()
     {
         $this->session->logout();
-        header('Location: /');
+        header('Location: /~polaznik22/');
     }
 
     public function validateLoginData($data)
@@ -93,19 +93,19 @@ class AuthController extends Controller
 
         //check if $_POST is empty
         if(empty($email) || empty($password)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         //check credentials
         $user = $this->userRepository->getUserByEmail($email);
         if(empty($user)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         $databasePassword = $user->getPassword();
 
         if(!password_verify($password, $databasePassword)){
-            header('Location: login');
+            header('Location: /~polaznik22/login');
         }
 
         return $user;

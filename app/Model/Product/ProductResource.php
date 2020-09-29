@@ -88,7 +88,7 @@ class ProductResource
         $description = $data['description'];
 
         if (empty($title) || empty($author) || empty($conditions) || empty($categories) || empty($sellPrice)){
-            header('Location: /product/create');
+            header('Location: /~polaznik22/product/create');
             return;
         }
 
@@ -108,17 +108,17 @@ class ProductResource
         finfo_close($finfo);
 
         if ($imageSize > 100000){
-            header('Location: /product/create');
+            header('Location: /~polaznik22/product/create');
             return;
         }
 
         if($imageExtension != 'jpg' && $imageExtension != 'png'){
-            header('Location: /product/create');
+            header('Location: /~polaznik22/product/create');
             return;
         }
 
         if($mimeType != 'image/jpeg' && $mimeType != 'image/png'){
-            header('Location: /product/create');
+            header('Location: /~polaznik22/product/create');
             return;
         }
 
