@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Paydesk</h1>
         <hr>
-        <form action="/paydesk" method="post" class="form-inline my-2 my-lg-0">
+        <form action="/~polaznik22/paydesk" method="post" class="form-inline my-2 my-lg-0">
             <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2">
         </form>
 
@@ -28,7 +28,7 @@
                     <td><?=$product->getconditions()?></td>
                     <td><?=$product->sellPrice?></td>
                     <td>
-                        <form method="post" action="paydesk/cart">
+                        <form method="post" action="/~polaznik22/paydesk/cart">
                             <input type="hidden" name="productId" value="<?= $product->getId() ?>">
                             <button>Add</button>
                         </form>
@@ -61,7 +61,7 @@
                     <td><p><?= $item->getAuthor() ?></p></td>
                     <td><p><?= $item->conditions ?></p></td>
                     <td><p align="right"><?= $item->sellPrice ?>kn</p></td>
-                    <td><form action="paydesk/remove" method="post">
+                    <td><form action="/~polaznik22/paydesk/remove" method="post">
                             <input type="hidden" name="itemId" value="<?= $item->getId() ?>">
                             <button>X</button>
                         </form>
@@ -77,7 +77,7 @@
        </table>
 
         <div>
-            <form action="paydesk/process" method="post">
+            <form action="/~polaznik22/paydesk/process" method="post">
                 <input type="hidden" name="total" value="<?= $total ?>">
                 <button>Process</button>
             </form>

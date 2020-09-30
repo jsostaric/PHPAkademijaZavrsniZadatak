@@ -2,7 +2,7 @@
 
 //webshop and dashboard
 $router->get('', 'HomeController@indexAction');
-$router->post('search', 'HomeController@searchAction');
+$router->post('', 'HomeController@searchAction');
 
 //login and registration
 $router->get('login', 'AuthController@loginAction');
@@ -16,7 +16,7 @@ $router->get('product', 'ProductController@indexAction');
 $router->get('product/create', 'ProductController@createAction');
 $router->post('product/store', 'ProductController@storeAction');
 
-//cashier
+//paydesk
 $router->get('paydesk', 'PaydeskController@indexAction');
 $router->post('paydesk', 'PaydeskController@indexAction');
 $router->post('paydesk/cart', 'PaydeskController@addToCartAction');
