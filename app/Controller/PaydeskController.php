@@ -56,8 +56,9 @@ class PaydeskController extends Controller
 
     public function addToCartAction()
     {
-        $product = $this->productRepository->getOne($_POST);
-
+        $productId = $_POST['productId'];
+        $condition = $_POST['condition'];
+        $product = $this->productRepository->getOne($productId,$condition);
 
         $this->paydeskResource->insert($product);
 
@@ -77,8 +78,11 @@ class PaydeskController extends Controller
             $productCondition = $product->conditions;
             $conditionId = $conditionRepo->getId($productCondition);
 
-            $updateAmount = $productResource->updateAmount($productId, $conditionId, $productAmount);
+            $productResource->updateAmount($productId, $conditionId, $productAmount);
         }
+
+        //create PDF of receipt
+
 
         //remove from paydesk
         $this->paydeskResource->clearPaydesk();
