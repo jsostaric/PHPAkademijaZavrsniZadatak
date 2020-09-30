@@ -77,4 +77,24 @@ class ProductRepository
 
         return $list;
     }
+
+    public function getOne($data)
+    {
+        $productId = $data['productId'];
+
+        $db = Database::getInstance();
+        $sql = "select a.id, a.title, a.subtitle, a.author, c.name as conditions, b.sellPrice, b.amount
+                from products a
+                inner join product_conditions b on b.products=a.id
+                inner join conditions c on c.id=b.conditions
+                where a.id = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'id' => $productId
+        ]);
+
+        $result = $stmt->fetch();
+
+        return $result;
+    }
 }

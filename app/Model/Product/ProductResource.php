@@ -70,6 +70,22 @@ class ProductResource
 
     }
 
+    public function updateAmount($productId, $conditionId, $productAmount)
+    {
+        $amount = $productAmount - 1;
+        $conditionId = $conditionId->id;
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare("update product_conditions
+                    set amount = :amount
+                    where products = :productId and conditions = :conditionId");
+        $stmt->execute([
+            'amount' => $amount,
+            'productId' => $productId,
+            'conditionId' => $conditionId
+        ]);
+    }
+
     public function validate($data)
     {
         $title = $data['title'];

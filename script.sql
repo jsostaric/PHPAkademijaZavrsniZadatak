@@ -48,6 +48,18 @@ create table product_categories(
     categories int not null
 );
 
+create table paydesk(
+    id int not null primary key auto_increment,
+    users int not null,
+    products int not null,
+    title varchar(255) not null,
+    subtitle varchar(255) not null,
+    author varchar(255) not null,
+    conditions varchar(255) not null,
+    sellPrice int not null,
+    amount int not null
+);
+
 create table acqusitions(
     id int not null primary key auto_increment,
     title varchar(255) not null,
@@ -60,6 +72,8 @@ create table orders(
     conditions int not null,
     buy_price int not null
 );
+
+
 
 alter table product_categories add foreign key (products) references products(id);
 alter table product_categories add foreign key (categories) references categories(id);

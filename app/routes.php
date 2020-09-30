@@ -11,15 +11,16 @@ $router->get('register', 'AuthController@registerAction');
 $router->post('register', 'AuthController@registerSubmitAction');
 $router->get('logout', 'AuthController@logoutAction');
 
-// user pages
-$router->get('user/show', 'UserController@showAction');
-$router->get('user/edit', 'UserController@editAction');
-
 //product pages
 $router->get('product', 'ProductController@indexAction');
 $router->get('product/create', 'ProductController@createAction');
 $router->post('product/store', 'ProductController@storeAction');
 
-$router->get('product/show?id=' . isset($_GET['id']), 'ProductController@showAction');
+//cashier
+$router->get('paydesk', 'PaydeskController@indexAction');
+$router->post('paydesk', 'PaydeskController@indexAction');
+$router->post('paydesk/cart', 'PaydeskController@addToCartAction');
+$router->post('paydesk/remove', 'PaydeskController@removeAction');
+$router->post('paydesk/process', 'PaydeskController@processAction');
 
 
