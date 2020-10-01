@@ -3,6 +3,7 @@
 
 namespace App\Model\Acquisition;
 
+
 use App\Core\Database;
 
 class AcquisitionRepository
@@ -13,34 +14,50 @@ class AcquisitionRepository
 
         $db = Database::getInstance();
 
-        $sql = "select * from acquisitionCart where products = :productsId and conditions = :conditionId";
-
-        $stmt = $db->prepare($sql);
+        $stmt = $db->prepare("select * from acquisitions order by dateOfEntry desc");
         $stmt->execute();
         $result = $stmt->fetchAll();
         foreach ($result as $row){
             $list[] = new Acquisition([
-                'id' => $row->id,
+               'id' => $row->id,
+               'users' => $row->users,
+               'total' => $row->total,
+                'dateOfEntry' => $row->dateOfEntry
             ]);
         }
 
         return $list;
     }
 
-    public function getFromCart()
+    public function getAcquisitions($term)
     {
-        $list = [];
+        $term = trim($term);
+        $term = "%{$term}%";
 
         $db = Database::getInstance();
 
-        $stmt = $db->prepare("select * from acquisitionCart");
-        $stmt->execute();
+        $stmt = $db->prepare("select * from acquisitions where id like :term order by id desc");
+        $stmt->execute([
+            'term' => $term
+        ]);
         $result = $stmt->fetchAll();
-        foreach ($result as $row){
+
+        return $result;
+    }
+
+    public function getAcquired($acquisitionId)
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $stmt = $db->prepare("select * from acquisitionProducts where acquisitions = :id");
+        $stmt->execute([
+           'id' => $acquisitionId
+        ]);
+        foreach ($stmt->fetchAll() as $row){
             $list[] = new Acquisition([
-                'id' => $row->id,
-                'products' => $row->products,
-                'conditions' => $row->conditions
+               'id' => $row->id,
+               'products' =>$row->products,
+               'conditions' =>$row->conditions,
             ]);
         }
 

@@ -29,7 +29,8 @@ class PaydeskController extends Controller
         if($this->session->getUser()->getAdmin()){
             $products = [];
             if(isset($_POST['searchItem'])){
-                $term = $this->searchAction($_POST['searchItem']);
+                $term = trim($_POST['searchItem']);
+                $term = "%{$term}%";
                 $products = $this->productRepository->getProducts($term);
             }
 
@@ -46,18 +47,10 @@ class PaydeskController extends Controller
         header('Location: /~polaznik22/');
     }
 
-    protected function searchAction($term)
-    {
-       $term = trim($_POST['searchItem']);
-       $term = "%{$term}%";
-
-       return $term;
-    }
-
     public function addToCartAction()
     {
         $productId = $_POST['productId'];
-        $condition = $_POST['condition'];
+        $condition = $_POST['conditionId'];
         $product = $this->productRepository->getOne($productId,$condition);
 
         $this->paydeskResource->insert($product);

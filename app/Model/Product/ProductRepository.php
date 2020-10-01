@@ -43,6 +43,9 @@ class ProductRepository
 
     public function getProducts($term)
     {
+        $term = trim($term);
+        $term = "%{$term}%";
+
         $list = [];
         $db = Database::getInstance();
         $sql = 'select  a.*, group_concat(distinct c.name) as category,e.id as conditionId, e.name as conditions, d.amount, d.sellPrice, d.buyPrice

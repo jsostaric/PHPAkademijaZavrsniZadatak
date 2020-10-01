@@ -5,19 +5,23 @@ namespace App\Model\Paydesk;
 
 
 use App\Core\Database;
+use App\Core\Session;
 
 class PaydeskRepository
 {
     public function getList()
     {
+        $uid = Session::getInstance()->getUser()->getId();
         $list = [];
 
         $db = Database::getInstance();
 
-        $sql = "select * from paydesk";
+        $sql = "select * from paydesk where users = :uid";
 
         $stmt = $db->prepare($sql);
-        $stmt->execute();
+        $stmt->execute([
+            'uid' => $uid
+        ]);
         $result = $stmt->fetchAll();
         foreach ($result as $row){
             $list[] = new Paydesk([

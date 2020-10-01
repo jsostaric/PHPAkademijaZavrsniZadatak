@@ -19,6 +19,14 @@ class HomeController extends Controller
     {
         $products = $this->productRepository->getList();
 
+        if(isset($_POST['search'])){
+            $term = trim($_POST['search']);
+            $term = "%$term%";
+
+            $products = $this->productRepository->getProducts($term);
+        }
+
+
         $data = [
             'products' => $products
         ];
@@ -28,16 +36,8 @@ class HomeController extends Controller
 
     public function searchAction()
     {
-        $term = $_POST['search'];
-        $term = trim($term, '');
-        $term = "%$term%";
 
-        $products = $this->productRepository->getProducts($term);
 
-        if($this->session->isLoggedIn() && $this->session->getUser()->getAdmin()){
-            return $this->view->render('product/index', compact('products'));
-        }else{
-            return $this->view->render('index', compact('products'));
-        }
+        return $this->view->render('index', compact('products'));
     }
 }

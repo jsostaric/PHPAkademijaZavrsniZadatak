@@ -50,8 +50,11 @@ class PaydeskResource
 
     public function clearPaydesk()
     {
+        $uid = Session::getInstance()->getUser()->getId();
         $db = Database::getInstance();
-        $stmt = $db->prepare("delete from paydesk");
-        $stmt->execute();
+        $stmt = $db->prepare("delete from paydesk where users = :uid");
+        $stmt->execute([
+            'uid' => $uid
+        ]);
     }
 }

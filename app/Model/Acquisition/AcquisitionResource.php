@@ -3,35 +3,39 @@
 
 namespace App\Model\Acquisition;
 
-
 use App\Core\Database;
+use App\Core\Session;
 
 class AcquisitionResource
 {
-    public function insertInCart($data)
+    public function insert($total)
     {
-        $productId = $data->id;
-        $conditionId = $data->conditionId;
+        $uid = Session::getInstance()->getUser()->getId();
 
         $db = Database::getInstance();
-
-        $sql = "insert into acquisitionCart(products, conditions) 
-                    values(:productId, :conditionId)";
-        $stmt = $db->prepare($sql);
+        $stmt = $db->prepare("insert into acquisitions(users, total) values(:uid, :total)");
         $stmt->execute([
-            'productId' => $productId,
-            'conditionId' => $conditionId
+            'uid' => $uid,
+            'total' => $total
         ]);
+
+        $lastInsertedId = $db->lastInsertId();
+        return $lastInsertedId;
     }
 
-    public function removeItem($data)
+    public function insertInAcquired($data, $acquisitionId)
     {
-        $itemId = $data;
+
+        $productId = $data->products;
+        $conditionId = $data->conditions;
 
         $db = Database::getInstance();
-        $stmt = $db->prepare("delete from acquisitionCart where products = :itemId");
+        $stmt = $db->prepare("insert into acquisitionProducts(products,conditions,acquisitions)
+                                       values(:productId, :conditionId, :acquisitionId)");
         $stmt->execute([
-            'itemId' => $itemId
+            'productId' => $productId,
+            'conditionId' => $conditionId,
+            'acquisitionId' => $acquisitionId
         ]);
     }
 }
