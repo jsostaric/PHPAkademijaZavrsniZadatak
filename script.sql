@@ -1,9 +1,4 @@
-drop database if exists polaznik22;
-create database polaznik22 character set utf8mb4 collate utf8mb4_unicode_ci;
 use polaznik22;
-
--- mysql -uroot --default_character_set=utf8mb4 < C:\Users\BoogieLee\PhpstormProjects\antikvarijat\antikvarijat.sql
-
 
 create table users(
                       id int not null primary key auto_increment,
