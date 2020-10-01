@@ -27,7 +27,7 @@ $router->post('paydesk/cart', 'PaydeskController@addToCartAction');
 $router->post('paydesk/remove', 'PaydeskController@removeAction');
 $router->post('paydesk/process', 'PaydeskController@processAction');
 
-//aquisition
+//acquisitions
 $router->get('acquisition', 'AcquisitionController@indexAction');
 $router->post('acquisition', 'AcquisitionController@indexAction');
 
