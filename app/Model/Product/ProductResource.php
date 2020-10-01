@@ -147,7 +147,7 @@ class ProductResource
         $extension = explode('.', $imageName);
         $imageExtenstion = strtolower(end($extension));
 
-        $uploadDir = BP . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
+        $uploadDir =  '/~polaznik22/app/uploads/';
         $uploadFile = $uploadDir . uniqid('image_') . '.' . $imageExtenstion;
 
         return $uploadFile;
