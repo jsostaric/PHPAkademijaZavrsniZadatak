@@ -29,7 +29,8 @@ class PaydeskController extends Controller
         if($this->session->getUser()->getAdmin()){
             $products = [];
             if(isset($_POST['searchItem'])){
-                $term = $this->searchAction($_POST['searchItem']);
+                $term = trim($_POST['searchItem']);
+                $term = "%{$term}%";
                 $products = $this->productRepository->getProducts($term);
             }
 
@@ -46,18 +47,11 @@ class PaydeskController extends Controller
         header('Location: /~polaznik22/');
     }
 
-    protected function searchAction($term)
-    {
-       $term = trim($_POST['searchItem']);
-       $term = "%{$term}%";
-
-       return $term;
-    }
-
     public function addToCartAction()
     {
-        $product = $this->productRepository->getOne($_POST);
-
+        $productId = $_POST['productId'];
+        $condition = $_POST['conditionId'];
+        $product = $this->productRepository->getOne($productId,$condition);
 
         $this->paydeskResource->insert($product);
 
@@ -77,8 +71,11 @@ class PaydeskController extends Controller
             $productCondition = $product->conditions;
             $conditionId = $conditionRepo->getId($productCondition);
 
-            $updateAmount = $productResource->updateAmount($productId, $conditionId, $productAmount);
+            $productResource->updateAmount($productId, $conditionId, $productAmount);
         }
+
+        //create PDF of receipt
+
 
         //remove from paydesk
         $this->paydeskResource->clearPaydesk();

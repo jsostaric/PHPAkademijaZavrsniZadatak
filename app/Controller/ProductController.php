@@ -26,6 +26,13 @@ class ProductController extends Controller
 
         $products = $this->productRepository->getList();
 
+        if (isset($_POST['search'])){
+            $term = trim($_POST['search']);
+            $term = "%$term%";
+            $products = $this->productRepository->getProducts($term);
+        }
+
+
         $data = [
             'products' => $products
         ];

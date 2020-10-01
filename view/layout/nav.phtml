@@ -16,11 +16,19 @@
                 <a class="nav-link" href="/~polaznik22/register">Register</a>
             </li>
             <?php elseif(\App\Core\Session::getInstance()->getUser()->getAdmin()): ?>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/~polaznik22/product">Dashboard</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Aquisitions</a>
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <span class="caret">Acquisitions</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/~polaznik22/acquisition">List</a>
+                    <a class="dropdown-item" href="/~polaznik22/acquisition/show">Reciept</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="nav-link" href="/~polaznik22/acquisition/create">New Acquisition</a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/~polaznik22/paydesk">Cash register</a>

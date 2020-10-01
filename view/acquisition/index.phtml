@@ -1,0 +1,36 @@
+<?php include_once BP . '/view/layout/header.phtml' ?>
+
+    <div class="row">
+        <div class="container">
+            <h1>Acquisitions</h1>
+            <hr>
+            <form action="/~polaznik22/acquisition" method="post" class="form-inline my-2 my-lg-0">
+                <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2">
+            </form>
+            <table class="table">
+                <thead><th>Date</th><th>OrderNumber</th><th>total</th><th>Action</th></thead>
+
+                <tbody>
+                <?php foreach ($acquisitions as $acquisition): ?>
+                    <tr>
+                        <td><?= date('d.m.y.',strtotime($acquisition->dateOfEntry)) ?></td>
+                        <td>
+                            <a href="/~polaznik22/acquisition/show?acquisitionId=<?= $acquisition->id ?>">
+                                Acquisition#<?= $acquisition->id ?>
+                            </a>
+                        </td>
+                        <td><?= $acquisition->total ?></td>
+                        <td>
+                            <form action="/~polaznik22/acquisition/addToReceipt" method="post">
+                                <input type="hidden" name="acquisitionId" value="<?= $acquisition->id ?>">
+                                <button>Add To Receipt</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<?php include_once BP . '/view/layout/footer.phtml' ?>

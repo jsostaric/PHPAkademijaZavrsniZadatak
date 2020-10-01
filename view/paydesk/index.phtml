@@ -30,6 +30,7 @@
                     <td>
                         <form method="post" action="/~polaznik22/paydesk/cart">
                             <input type="hidden" name="productId" value="<?= $product->getId() ?>">
+                            <input type="hidden" name="conditionId" value="<?= $product->conditionId ?>">
                             <button>Add</button>
                         </form>
                     </td>
