@@ -9,10 +9,12 @@ use App\Model\Acquisition\AcquisitionCartResource;
 use App\Model\Acquisition\AcquisitionResource;
 use App\Model\Acquisition\AcquisitionRepository;
 use App\Model\Product\ProductRepository;
+use App\Model\Product\ProductResource;
 
 class AcquisitionController extends Controller
 {
     private $productRepository;
+    private $productResource;
     private $acquisitionCartRepository;
     private $acquisitionRepository;
     private $acquisitionCartResource;
@@ -22,6 +24,7 @@ class AcquisitionController extends Controller
     {
         parent::__construct();
         $this->productRepository = new ProductRepository();
+        $this->productResource = new ProductResource();
         $this->acquisitionCartRepository = new AcquisitionCartRepository();
         $this->acquisitionRepository = new AcquisitionRepository();
         $this->acquisitionResource = new AcquisitionResource();
@@ -76,13 +79,10 @@ class AcquisitionController extends Controller
         $acquisitionsId = isset($_GET['acquisitionId']) ? $_GET['acquisitionId'] : '';
         $acquiredProducts = $this->acquisitionRepository->getAcquired($acquisitionsId);
         $products = [];
-//        $receipt = [];
         foreach ($acquiredProducts as $acquired){
-//            $receipt[] = $acquisitionsId . '-' . $acquired->id;
-            $products[] = $this->productRepository->getOne($acquired->products, $acquired->conditions);
+            $products[] = $this->productRepository->getOneAcquired($acquired->products, $acquired->conditions, $acquisitionsId);
         }
-
-        $this->view->render('acquisition/show', compact('products'));
+        $this->view->render('acquisition/show', compact('products', 'acquiredProducts'));
     }
 
     public function addToCartAction()
@@ -106,14 +106,32 @@ class AcquisitionController extends Controller
 
         //insert into Acq_products
         foreach ($getCart as $item){
-            $products = $this->acquisitionResource->insertInAcquired($item, $acquisitionId);
+            $this->acquisitionResource->insertInAcquired($item, $acquisitionId);
         }
 
         //clear cart
         $this->acquisitionCartResource->clearCart();
 
         //redirect to acquisitions list
-        return $this->view->render('acquisition/create');
+        header('Location: /~polaznik22/acquisition');
+    }
+
+    public function completeAction()
+    {
+        $acquisitionId = $_POST['acquisitionId'];
+        //get productsId and conditionId with acquisition id
+        $getAcquiredProducts = $this->acquisitionRepository->getAcquired($acquisitionId);
+
+        //update amount of products
+        foreach ($getAcquiredProducts as $item){
+            $product = $this->productRepository->getOne($item->products, $item->conditions);
+            $this->productResource->updateAmountUp($product->id, $product->conditionId, $product->amount);
+        }
+
+        //update status
+        $this->acquisitionResource->updateStatus($acquisitionId);
+
+        header('Location: /~polaznik22/acquisition');
     }
 
     public function removeAction()
@@ -127,4 +145,5 @@ class AcquisitionController extends Controller
             header('Location: /~polaznik22/acquisition/create');
         }
     }
+
 }

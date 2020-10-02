@@ -70,10 +70,25 @@ class ProductResource
 
     }
 
-    public function updateAmount($productId, $conditionId, $productAmount)
+    public function updateAmountDown($productId, $conditionId, $productAmount)
     {
         $amount = $productAmount - 1;
         $conditionId = $conditionId->id;
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare("update product_conditions
+                    set amount = :amount
+                    where products = :productId and conditions = :conditionId");
+        $stmt->execute([
+            'amount' => $amount,
+            'productId' => $productId,
+            'conditionId' => $conditionId
+        ]);
+    }
+
+    public function updateAmountUp($productId, $conditionId, $productAmount)
+    {
+        $amount = $productAmount + 1;
 
         $db = Database::getInstance();
         $stmt = $db->prepare("update product_conditions

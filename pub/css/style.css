@@ -5,3 +5,7 @@
 .image{
     max-height: 100px;
 }
+
+.completed{
+    background-color: #b4e9b4;
+}

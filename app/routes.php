@@ -34,7 +34,6 @@ $router->post('acquisition', 'AcquisitionController@indexAction');
 $router->get('acquisition/create', 'AcquisitionController@createAction');
 $router->post('acquisition/create', 'AcquisitionController@createAction');
 
-$router->get('acquisition/addReceipt', 'AcquisitionController@addToReceipts');
 if (isset($_GET['acquisitionId'])){
     $router->get('acquisition/show?acquisitionId=' . $_GET['acquisitionId'],
         'AcquisitionController@showAction');
@@ -42,6 +41,7 @@ if (isset($_GET['acquisitionId'])){
 
 $router->post('acquisition/cart', 'AcquisitionController@addToCartAction');
 $router->post('acquisition/process', 'AcquisitionController@processAction');
+$router->post('acquisition/complete', 'AcquisitionController@completeAction');
 $router->post('acquisition/remove', 'AcquisitionController@removeAction');
 
 

@@ -5,14 +5,14 @@
             <h1>Acquisitions</h1>
             <hr>
             <form action="/~polaznik22/acquisition" method="post" class="form-inline my-2 my-lg-0">
-                <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2">
+                <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2" placeholder="search item">
             </form>
             <table class="table">
                 <thead><th>Date</th><th>OrderNumber</th><th>total</th><th>Action</th></thead>
 
                 <tbody>
                 <?php foreach ($acquisitions as $acquisition): ?>
-                    <tr>
+                    <tr class="<?= $acquisition->completed ? 'completed': '' ?>">
                         <td><?= date('d.m.y.',strtotime($acquisition->dateOfEntry)) ?></td>
                         <td>
                             <a href="/~polaznik22/acquisition/show?acquisitionId=<?= $acquisition->id ?>">
@@ -20,11 +20,12 @@
                             </a>
                         </td>
                         <td><?= $acquisition->total ?></td>
-                        <td>
-                            <form action="/~polaznik22/acquisition/addToReceipt" method="post">
+                        <td><?php if(!$acquisition->completed): ?>
+                            <form action="/~polaznik22/acquisition/complete" method="post">
                                 <input type="hidden" name="acquisitionId" value="<?= $acquisition->id ?>">
-                                <button>Add To Receipt</button>
+                                <button>Complete</button>
                             </form>
+                        <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach ?>

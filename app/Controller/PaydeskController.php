@@ -71,7 +71,7 @@ class PaydeskController extends Controller
             $productCondition = $product->conditions;
             $conditionId = $conditionRepo->getId($productCondition);
 
-            $productResource->updateAmount($productId, $conditionId, $productAmount);
+            $productResource->updateAmountDown($productId, $conditionId, $productAmount);
         }
 
         //create PDF of receipt

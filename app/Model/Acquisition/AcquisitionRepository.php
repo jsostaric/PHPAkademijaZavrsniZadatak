@@ -22,7 +22,8 @@ class AcquisitionRepository
                'id' => $row->id,
                'users' => $row->users,
                'total' => $row->total,
-                'dateOfEntry' => $row->dateOfEntry
+                'dateOfEntry' => $row->dateOfEntry,
+                'completed' => $row->completed
             ]);
         }
 
@@ -58,6 +59,7 @@ class AcquisitionRepository
                'id' => $row->id,
                'products' =>$row->products,
                'conditions' =>$row->conditions,
+               'receipt' => $row->receipt
             ]);
         }
 
