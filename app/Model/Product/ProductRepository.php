@@ -101,4 +101,27 @@ class ProductRepository
 
         return $result;
     }
+
+    public function getOneAcquired($productId, $conditionId, $acquisitionsId)
+    {
+        $db = Database::getInstance();
+
+        $sql = "select a.id, a.title, a.subtitle, a.author, c.id as conditionId,
+                        c.name as conditions, b.sellPrice, b.buyPrice, b.amount, d.receipt
+                from products a
+                inner join product_conditions b on b.products=a.id
+                inner join conditions c on c.id=b.conditions
+                inner join acquisitionProducts d on d.products=a.id
+                where a.id = :id and c.id = :conditionId and d.acquisitions = :acquisitionId";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'id' => $productId,
+            'conditionId' => $conditionId,
+            'acquisitionId' => $acquisitionsId
+        ]);
+
+        $result = $stmt->fetch();
+
+        return $result;
+    }
 }
