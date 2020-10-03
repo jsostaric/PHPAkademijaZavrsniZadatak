@@ -74,8 +74,9 @@ class PaydeskController extends Controller
             $productResource->updateAmountDown($productId, $conditionId, $productAmount);
         }
 
-
+        //create pdf receipt
         $this->createPdfReceipt();
+
         //remove from paydesk
         $this->paydeskResource->clearPaydesk();
 
@@ -96,38 +97,15 @@ class PaydeskController extends Controller
     {
         $paydesk = $this->paydeskRepository->getList();
 
-        //create invoice in file
-        if (!empty($paydesk)){
-            $invoiceFile = uniqid('invoice_') . '.txt';
-            $invoice = fopen('../view/paydesk/invoice/' . $invoiceFile , 'w');
+        // create it to pdf
+        $pdf = new \App\Core\FPdf\Pdf();
 
-            $total = 0;
-            foreach ($paydesk as $product){
-                $total += $product->sellPrice;
-                $content = '';
-                $content .= $product->title . ";";
-                $content .= $product->subtitle . ";";
-                $content .= $product->author . ";";
-                $content .= $product->conditions . ";";
-                $content .= $product->sellPrice . "\n";
-                fwrite($invoice, $content);
-            }
-            fwrite($invoice, "Total;;;;{$total}");
-            fclose($invoice);
+        $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
 
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->AddPage();
+        $pdf->basicTable($header, $paydesk);
 
-            // create it to pdf
-            $pdf = new \App\Core\FPdf\Pdf();
-
-            $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
-
-            // Data loading
-            $data = $pdf->LoadData('../view/paydesk/invoice/' . $invoiceFile);
-            $pdf->SetFont('Arial','',10);
-            $pdf->AddPage();
-            $pdf->basicTable($header,$data);
-
-            $pdf->Output();
-        }
+        $pdf->Output();
     }
 }
