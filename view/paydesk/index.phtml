@@ -48,7 +48,11 @@
 <div class="row">
     <div class="container">
         <?php if(!empty($paydesk)): ?>
-       <table class="table table-striped">
+            <div class="row container col-md-2 float-right mb-2">
+
+            </div>
+
+            <table class="table table-striped">
            <thead>
                 <th>Title</th><th>Author</th><th>Condition</th><th>Price</th><th>Action</th>
            </thead>
@@ -77,10 +81,10 @@
            </tbody>
        </table>
 
-        <div>
-            <form action="/~polaznik22/paydesk/process" method="post">
+        <div class="row container col-md-2 float-right mb-2">
+            <form action="/~polaznik22/paydesk/process" target="_blank" method="post">
                 <input type="hidden" name="total" value="<?= $total ?>">
-                <button>Process</button>
+                <button class="btn btn-primary">Process</button>
             </form>
         </div>
         <?php endif; ?>

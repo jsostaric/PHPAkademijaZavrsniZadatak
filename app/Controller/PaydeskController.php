@@ -74,13 +74,12 @@ class PaydeskController extends Controller
             $productResource->updateAmountDown($productId, $conditionId, $productAmount);
         }
 
-        //create PDF of receipt
 
-
+        $this->createPdfReceipt();
         //remove from paydesk
         $this->paydeskResource->clearPaydesk();
 
-        $this->view->render('paydesk/index');
+        return $this->view->render('paydesk/index');
     }
 
     public function removeAction()
@@ -90,6 +89,45 @@ class PaydeskController extends Controller
             $this->paydeskResource->removeItem($itemId);
 
             header('Location: /~polaznik22/paydesk');
+        }
+    }
+
+    public function createPdfReceipt()
+    {
+        $paydesk = $this->paydeskRepository->getList();
+
+        //create invoice in file
+        if (!empty($paydesk)){
+            $invoiceFile = uniqid('invoice_') . '.txt';
+            $invoice = fopen('../view/paydesk/invoice/' . $invoiceFile , 'w');
+
+            $total = 0;
+            foreach ($paydesk as $product){
+                $total += $product->sellPrice;
+                $content = '';
+                $content .= $product->title . ";";
+                $content .= $product->subtitle . ";";
+                $content .= $product->author . ";";
+                $content .= $product->conditions . ";";
+                $content .= $product->sellPrice . "\n";
+                fwrite($invoice, $content);
+            }
+            fwrite($invoice, "Total;;;;{$total}");
+            fclose($invoice);
+
+
+            // create it to pdf
+            $pdf = new \App\Core\FPdf\Pdf();
+
+            $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
+
+            // Data loading
+            $data = $pdf->LoadData('../view/paydesk/invoice/' . $invoiceFile);
+            $pdf->SetFont('Arial','',10);
+            $pdf->AddPage();
+            $pdf->basicTable($header,$data);
+
+            $pdf->Output();
         }
     }
 }
