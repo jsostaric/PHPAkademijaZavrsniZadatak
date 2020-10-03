@@ -52,7 +52,8 @@ create table acquisitions(
                              id int not null primary key auto_increment,
                              users int not null,
                              total int,
-                             dateOfEntry timestamp default now()
+                             dateOfEntry timestamp default now(),
+                             completed int default 0
 );
 
 create table acquisitionCart(
@@ -66,6 +67,7 @@ create table acquisitionProducts(
                                     id int not null primary key auto_increment,
                                     products int not null,
                                     conditions int not null,
+                                    receipt varchar(255) not null,
                                     acquisitions int not null
 );
 
