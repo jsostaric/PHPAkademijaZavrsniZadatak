@@ -6,18 +6,8 @@ namespace App\Core\FPdf;
 
 class Pdf extends FPdf
 {
-    // Load data
-    function loadData($file)
-    {
-        // Read file lines
-        $lines = file($file);
-        $data = array();
-        foreach($lines as $line)
-            $data[] = explode(';',trim($line));
-        return $data;
-    }
 
-// Simple table
+    // Simple table
     function basicTable($header, $data)
     {
         // Header
@@ -25,11 +15,21 @@ class Pdf extends FPdf
             $this->Cell(40,7,$col,1);
         $this->Ln();
         // Data
+        $total = 0;
         foreach($data as $row)
         {
-            foreach($row as $col)
-                $this->Cell(40,6,$col,1);
+            $total += $row->sellPrice;
+            $this->Cell(40,6,$row->title,1);
+            $this->Cell(40,6,$row->subtitle,1);
+            $this->Cell(40,6,$row->author,1);
+            $this->Cell(40,6,$row->conditions,1);
+            $this->Cell(40,6,$row->sellPrice,1);
             $this->Ln();
         }
+        $this->Cell(40,6,'Total',1);
+        $this->Cell(40,6,'',1);
+        $this->Cell(40,6,'',1);
+        $this->Cell(40,6,'',1);
+        $this->Cell(40,6,$total,1);
     }
 }
