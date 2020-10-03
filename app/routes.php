@@ -13,6 +13,12 @@ $router->post('register', 'AuthController@registerSubmitAction');
 
 $router->get('logout', 'AuthController@logoutAction');
 
+//user controllers
+$router->get('user', 'UserController@indexAction');
+$router->get('user/edit', 'UserController@editAction');
+$router->post('user/update', 'UserController@updateAction');
+
+
 //product pages
 $router->get('product', 'ProductController@indexAction');
 $router->post('product', 'ProductController@indexAction');

@@ -1,0 +1,23 @@
+<?php include_once BP . '/view/layout/header.phtml' ?>
+
+<div class="row">
+    <div class="container">
+        <h1>User's Pages</h1>
+        <hr>
+        <table class="table">
+            <thead><th>Username</th><th>Email</th><th>Action</th></thead>
+
+            <tbody>
+
+                    <tr>
+                        <td><?= $user->username ?></td>
+                        <td><?= $user->email ?></td>
+                        <td><a href="/~polaznik22/user/edit">Change Password</a></td>
+                    </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php include_once BP . '/view/layout/footer.phtml' ?>

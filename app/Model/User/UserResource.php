@@ -5,6 +5,7 @@ namespace App\Model\User;
 
 
 use App\Core\Database;
+use App\Core\Session;
 
 class UserResource
 {
@@ -23,5 +24,18 @@ class UserResource
         ]);
 
         return $result;
+    }
+
+    public function updatePassword($data)
+    {
+        $password = password_hash($data['password'],PASSWORD_DEFAULT);
+        $db = Database::getInstance();
+        $stmt = $db->prepare("update users set password = :password where id = :id");
+        $stmt->execute([
+            'id' => $data['id'],
+            'password' => $password
+        ]);
+
+        Session::getInstance()->getUser()->password = $password;
     }
 }

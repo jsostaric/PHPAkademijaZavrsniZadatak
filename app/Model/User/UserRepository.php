@@ -4,6 +4,7 @@
 namespace App\Model\User;
 
 use App\Core\Database;
+use App\Core\Session;
 
 class UserRepository
 {
@@ -31,5 +32,43 @@ class UserRepository
         }
 
         return $user;
+    }
+
+    public function getUserById($uid)
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("select * from users where id = :uid");
+
+        $stmt->execute([
+           'uid' => $uid
+        ]);
+
+        return $stmt->fetch();
+    }
+
+    public function passwordCheck($data)
+    {
+        $message = '';
+        $oldPassword = $data['oldPassword'];
+        $password = $data['password'];
+        $confirmPassword = $data['confirmPassword'];
+
+        if (empty($oldPassword) || empty($password) || empty($confirmPassword)) {
+            return  $message = 'All fields must be filled';
+        }
+
+        if(!password_verify($oldPassword, Session::getInstance()->getUser()->getPassword())) {
+            return  $message = 'Old password does not match';
+        }
+
+        if(password_verify($password, Session::getInstance()->getUser()->getPassword())) {
+            return  $message = 'New password cannot be same as old';
+        }
+
+        if($password != $confirmPassword) {
+            return  $message = 'Please repeat password correctly';
+        }
+
+        return $message;
     }
 }
