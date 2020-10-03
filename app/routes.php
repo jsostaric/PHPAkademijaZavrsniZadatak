@@ -32,6 +32,7 @@ $router->post('paydesk', 'PaydeskController@indexAction');
 $router->post('paydesk/cart', 'PaydeskController@addToCartAction');
 $router->post('paydesk/remove', 'PaydeskController@removeAction');
 $router->post('paydesk/process', 'PaydeskController@processAction');
+$router->get('paydesk/createPdf', 'PaydeskController@createPdfReceipt');
 
 //acquisitions
 $router->get('acquisition', 'AcquisitionController@indexAction');
