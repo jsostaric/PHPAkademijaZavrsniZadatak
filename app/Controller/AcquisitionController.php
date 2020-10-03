@@ -76,13 +76,17 @@ class AcquisitionController extends Controller
 
     public function showAction()
     {
-        $acquisitionsId = isset($_GET['acquisitionId']) ? $_GET['acquisitionId'] : '';
-        $acquiredProducts = $this->acquisitionRepository->getAcquired($acquisitionsId);
-        $products = [];
-        foreach ($acquiredProducts as $acquired){
-            $products[] = $this->productRepository->getOneAcquired($acquired->products, $acquired->conditions, $acquisitionsId);
+        if($this->session->getUser()->getAdmin()) {
+            $acquisitionsId = isset($_GET['acquisitionId']) ? $_GET['acquisitionId'] : '';
+            $acquiredProducts = $this->acquisitionRepository->getAcquired($acquisitionsId);
+            $products = [];
+            foreach ($acquiredProducts as $acquired) {
+                $products[] = $this->productRepository->getOneAcquired($acquired->products, $acquired->conditions, $acquisitionsId);
+            }
+            $this->view->render('acquisition/show', compact('products', 'acquiredProducts'));
         }
-        $this->view->render('acquisition/show', compact('products', 'acquiredProducts'));
+
+        header('Location: /~polaznik22/');
     }
 
     public function addToCartAction()
@@ -145,5 +149,4 @@ class AcquisitionController extends Controller
             header('Location: /~polaznik22/acquisition/create');
         }
     }
-
 }
