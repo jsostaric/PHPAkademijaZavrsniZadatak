@@ -95,17 +95,20 @@ class PaydeskController extends Controller
 
     public function createPdfReceipt()
     {
-        $paydesk = $this->paydeskRepository->getList();
+        if($this->session->getUser()->getAdmin()) {
+            $paydesk = $this->paydeskRepository->getList();
 
-        // create it to pdf
-        $pdf = new \App\Core\FPdf\Pdf();
+            // create it to pdf
+            $pdf = new \App\Core\FPdf\Pdf();
 
-        $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
+            $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
 
-        $pdf->SetFont('Arial', '', 10);
-        $pdf->AddPage();
-        $pdf->basicTable($header, $paydesk);
+            $pdf->SetFont('Arial', '', 10);
+            $pdf->AddPage();
+            $pdf->basicTable($header, $paydesk);
 
-        $pdf->Output();
+            $pdf->Output();
+        }
+        header('Location: /~polaznik22/');
     }
 }
