@@ -107,7 +107,7 @@ class PaydeskController extends Controller
             $pdf->AddPage();
             $pdf->basicTable($header, $paydesk);
 
-            $pdf->Output();
+            return $pdf->Output();
         }
         header('Location: /~polaznik22/');
     }
