@@ -103,7 +103,7 @@ class PaydeskController extends Controller
 
             $header = array('Title', 'Subtitle', 'Author', 'Condition', 'Price');
 
-            $pdf->SetFont('Arial', '', 10);
+            $pdf->SetFont('Arial', '', 8);
             $pdf->AddPage();
             $pdf->basicTable($header, $paydesk);
 

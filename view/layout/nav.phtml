@@ -7,7 +7,7 @@
         <ul class="navbar-nav">
             <?php if (!\App\Core\Session::getInstance()->isLoggedIn()): ?>
             <li class="nav-item active">
-                <a class="nav-link" href="/~polaznik22/">Home</a>
+                <a class="nav-link" href="/~polaznik22/"><i class="fas fa-home"></i></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/~polaznik22/login">Login</a>
@@ -17,7 +17,7 @@
             </li>
             <?php elseif(\App\Core\Session::getInstance()->getUser()->getAdmin()): ?>
             <li class="nav-item">
-                <a class="nav-link" href="/~polaznik22/product">Dashboard</a>
+                <a class="nav-link" href="/~polaznik22/product"><i class="fas fa-home"></i></a>
             </li>
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -34,7 +34,7 @@
 
             <?php else: ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/~polaznik22/">Home</a>
+                    <a class="nav-link" href="/~polaznik22/"><i class="fas fa-home"></i></a>
                 </li>
             <?php endif ?>
         </ul>

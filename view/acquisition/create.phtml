@@ -30,7 +30,7 @@
                                     <form method="post" action="/~polaznik22/acquisition/cart">
                                         <input type="hidden" name="productId" value="<?= $product->getId() ?>">
                                         <input type="hidden" name="condition" value="<?= $product->conditionId ?>">
-                                        <button>Add</button>
+                                        <button class="btn btn-primary"><i class="far fa-plus-square"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -61,7 +61,7 @@
                             <td><form action="/~polaznik22/acquisition/remove" method="post">
                                     <input type="hidden" name="itemId" value="<?= $item->id ?>">
                                     <input type="hidden" name="conditionId" value="<?= $item->conditionId ?>">
-                                    <button>X</button>
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -77,7 +77,7 @@
                 <div>
                     <form action="/~polaznik22/acquisition/process" method="post">
                         <input type="hidden" name="total" value="<?= $total ?>">
-                        <button>Process</button>
+                        <button class="btn btn-primary">Process</button>
                     </form>
                 </div>
             <?php endif; ?>

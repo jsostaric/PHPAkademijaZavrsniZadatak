@@ -83,7 +83,7 @@ class AcquisitionController extends Controller
             foreach ($acquiredProducts as $acquired) {
                 $products[] = $this->productRepository->getOneAcquired($acquired->products, $acquired->conditions, $acquisitionsId);
             }
-            $this->view->render('acquisition/show', compact('products', 'acquiredProducts'));
+            return $this->view->render('acquisition/show', compact('products', 'acquiredProducts'));
         }
 
         header('Location: /~polaznik22/');
