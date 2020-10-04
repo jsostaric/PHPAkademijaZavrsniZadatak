@@ -5,7 +5,7 @@
             <h1>Acquisitions</h1>
             <hr>
             <form action="/~polaznik22/acquisition" method="post" class="form-inline my-2 my-lg-0">
-                <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2" placeholder="search item">
+                <input type="search" name="searchItem" id="search" class="form-control mr-sm-2 ml-2 mb-2" placeholder="search item">
             </form>
             <table class="table">
                 <thead><th>Date</th><th>OrderNumber</th><th>total</th><th>Action</th></thead>
@@ -23,7 +23,7 @@
                         <td><?php if(!$acquisition->completed): ?>
                             <form action="/~polaznik22/acquisition/complete" method="post">
                                 <input type="hidden" name="acquisitionId" value="<?= $acquisition->id ?>">
-                                <button>Complete</button>
+                                <button class="btn btn-inline btn-success"><i class="far fa-check-circle"></i></button>
                             </form>
                         <?php endif; ?>
                         </td>

@@ -31,7 +31,7 @@
                         <form method="post" action="/~polaznik22/paydesk/cart">
                             <input type="hidden" name="productId" value="<?= $product->getId() ?>">
                             <input type="hidden" name="conditionId" value="<?= $product->conditionId ?>">
-                            <button>Add</button>
+                            <button class="btn btn-primary"><i class="far fa-plus-square"></i></button>
                         </form>
                     </td>
                 </tr>
@@ -68,7 +68,7 @@
                     <td><p align="right"><?= $item->sellPrice ?>kn</p></td>
                     <td><form action="/~polaznik22/paydesk/remove" method="post">
                             <input type="hidden" name="itemId" value="<?= $item->getId() ?>">
-                            <button>X</button>
+                            <button class="btn btn-danger"><i class="fas fa-times"></i></button>
                         </form>
                     </td>
                 </tr>
