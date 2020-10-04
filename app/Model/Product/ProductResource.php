@@ -66,8 +66,6 @@ class ProductResource
             echo $e->getMessage();
             $db->rollback();
         }
-
-
     }
 
     public function updateAmountDown($productId, $conditionId, $productAmount)
@@ -104,19 +102,10 @@ class ProductResource
     public function validate($data)
     {
         $title = $data['title'];
-        $subtitle = $data['subtitle'];
         $author = $data['author'];
-        $publisher = $data['publisher'];
-        $year = $data['year'];
-        $format = $data['format'];
-        $retailPrice = $data['retailPrice'];
-        $barcode = $data['barcode'];
         $categories = isset($data['categories']);
         $conditions = isset($data['conditions']);
         $sellPrice = $data['sellPrice'];
-        $buyPrice = $data['buyPrice'];
-        $amount = $data['amount'];
-        $description = $data['description'];
 
         if (empty($title) || empty($author) || empty($conditions) || empty($categories) || empty($sellPrice)){
             header('Location: /~polaznik22/product/create');
@@ -162,7 +151,7 @@ class ProductResource
         $extension = explode('.', $imageName);
         $imageExtenstion = strtolower(end($extension));
 
-        $uploadDir = BP . '/app/uploads/';
+        $uploadDir = 'uploads/';
         $uploadFile = $uploadDir . uniqid('image_') . '.' . $imageExtenstion;
 
         return $uploadFile;
