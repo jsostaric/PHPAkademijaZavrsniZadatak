@@ -93,6 +93,7 @@ alter table product_conditions add foreign key (conditions) references condition
 alter table acquisitions add foreign key (users) references users(id);
 alter table acquisitionProducts add foreign key (products) references products(id) on delete cascade;
 alter table acquisitionProducts add foreign key (conditions) references conditions(id) on delete cascade;
+alter table acquisitionProducts add foreign key (acquisitions) references acquisitions(id) on delete cascade;
 
 
 
